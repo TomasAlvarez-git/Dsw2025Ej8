@@ -5,9 +5,9 @@ public class CuentaBancaria
     private TipoCuenta _tipo;
     private string _numero;
     protected decimal _saldo;
-    private Estado _estado;
-    private decimal _tasaDeInteres;
-    private decimal _limiteDeDescubierto;
+    protected Estado _estado;
+    protected decimal _tasaDeInteres;
+    protected decimal _limiteDeDescubierto;
     private decimal _comision;
     private string[] _titulares;
 
@@ -82,41 +82,12 @@ public class CuentaBancaria
 
     public void Depositar(decimal monto)
     {
-        if (_tipo == TipoCuenta.CajaDeAhorro)
-        {
-            _saldo += monto;
-        }
-        else if (_tipo == TipoCuenta.CuentaCorriente)
-        {
-            monto -= monto * _comision;
-            _saldo += monto;
-        }
+
     }
 
     public void Retirar(decimal monto)
     {
-        if (_tipo == TipoCuenta.CajaDeAhorro)
-        {
-            _saldo -= monto;
-        }
-        else if (_tipo == TipoCuenta.CuentaCorriente)
-        {
-            if (_saldo - monto >= -_limiteDeDescubierto)
-            {
-                _saldo -= monto;
-            }
-            if (_saldo < 0)
-            {
-                _estado = Estado.Suspendida;
-            }
-        }
-    }
 
-    public void AplicarInteres()
-    {
-        if (_tipo == TipoCuenta.CajaDeAhorro)
-        {
-            _saldo += _saldo * _tasaDeInteres;
-        }
+
     }
 }
