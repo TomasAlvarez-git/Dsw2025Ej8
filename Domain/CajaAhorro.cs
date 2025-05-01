@@ -14,22 +14,22 @@ namespace Dsw2025Ej8.Domain
         }
         new public void Depositar(decimal monto)
         {
-            _saldo += monto;
+            Saldo += monto;
         }
 
         new public void Retirar(decimal monto)
         {
-            if (monto > _saldo)
+            if (monto > Saldo)
             {
                 throw new Exception("No se puede retirar más de lo que hay en la cuenta");
             }
-            _saldo -= monto;
+            Saldo -= monto;
         }
 
         public void AplicarInteres()
         {
 
-            _saldo += _saldo * _tasaDeInteres;
+            Saldo += Saldo * TasaDeInteres;
 
         }
     }

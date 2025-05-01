@@ -16,19 +16,19 @@ namespace Dsw2025Ej8.Domain
         new public void Depositar(decimal monto)
         {
             monto -= monto * _comision;
-            _saldo += monto;
+            Saldo += monto;
         }
 
         new public void Retirar(decimal monto)
         {
-            if (monto > _saldo + _limiteDeDescubierto)
+            if (monto > Saldo + LimiteDeDescubierto)
             {
                 throw new Exception("No se puede retirar más de lo que hay en la cuenta");
             }
-            _saldo -= monto;
-            if (_saldo < 0)
+            Saldo -= monto;
+            if (Saldo < 0)
             {
-                _estado = Estado.Suspendida;
+                Estado = Estado.Suspendida;
             }
         }
     }

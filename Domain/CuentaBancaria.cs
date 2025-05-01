@@ -2,83 +2,24 @@
 
 public class CuentaBancaria
 {
-    private TipoCuenta _tipo;
-    private string _numero;
-    protected decimal _saldo;
-    protected Estado _estado;
-    protected decimal _tasaDeInteres;
-    protected decimal _limiteDeDescubierto;
-    private decimal _comision;
-    private string[] _titulares;
+    public TipoCuenta Tipo { get; private set; }
+    public string Numero { get; private set; }
+    public decimal Saldo { get; protected set;  }
+    protected Estado Estado { get; set; }
+    protected decimal TasaDeInteres { get; set; } = 1.5M;
+    protected decimal LimiteDeDescubierto { get; set; } = 500M;
+    private decimal Comision { get; set; }
+    public string[] Titulares { get; private set; }
 
     public CuentaBancaria(string numero, decimal saldo, TipoCuenta tipo, string[] titulares)
     {
-        _numero = numero;
-        _saldo = saldo;
-        _tipo = tipo;
-        _estado = Estado.Activa;
-        _titulares = titulares;
+        Numero = numero;
+        Saldo = saldo;
+        Tipo = tipo;
+        Estado = Estado.Activa;
+        Titulares = titulares;
     }
-    #region Getters/Setters
-    public string GetNumero()
-    {
-        return _numero;
-    }
-
-    public decimal GetSaldo()
-    {
-        return _saldo;
-    }
-    public TipoCuenta GetTipo()
-    {
-        return _tipo;
-    }
-
-    public Estado GetEstado()
-    {
-        return _estado;
-    }
-
-    public void SetEstado(Estado estado)
-    {
-        _estado = estado;
-    }
-
-    public decimal GetTasaDeInteres()
-    {
-        return _tasaDeInteres;
-    }
-
-    public void SetTasaDeInteres(decimal tasaDeInteres)
-    {
-        _tasaDeInteres = tasaDeInteres;
-    }
-
-    public decimal GetLimiteDeDescubierto()
-    {
-        return _limiteDeDescubierto;
-    }
-
-    public void SetLimiteDeDescubierto(decimal limiteDeDescubierto)
-    {
-        _limiteDeDescubierto = limiteDeDescubierto;
-    }
-
-    public decimal GetComision()
-    {
-        return _comision;
-    }
-
-    public void SetComision(decimal comision)
-    {
-        _comision = comision;
-    }
-
-    public string[] GetTitulares()
-    {
-        return _titulares;
-    }
-    #endregion
+     
 
     public void Depositar(decimal monto)
     {
