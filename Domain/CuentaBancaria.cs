@@ -4,7 +4,7 @@ public class CuentaBancaria
 {
     private TipoCuenta _tipo;
     private string _numero;
-    private decimal _saldo;
+    protected decimal _saldo;
     private Estado _estado;
     private decimal _tasaDeInteres;
     private decimal _limiteDeDescubierto;

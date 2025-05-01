@@ -6,7 +6,15 @@ using System.Threading.Tasks;
 
 namespace Dsw2025Ej8.Domain
 {
-    internal class CajaAhorro
+    public class CajaAhorro : CuentaBancaria
     {
+        public CajaAhorro(string numero, decimal saldo, string[] titulares) : base(numero, saldo, TipoCuenta.CajaDeAhorro, titulares)
+        { 
+
+        }
+        new public void Depositar(decimal monto)
+        {
+            _saldo += monto;
+        }
     }
 }
