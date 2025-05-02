@@ -2,62 +2,95 @@
 using System.Collections.Generic;
 using Dsw2025Ej8.Domain;
 
-namespace Dsw2025Ej8
+class Program
 {
-    internal class Program
+    static void Main()
     {
-        static void Main(string[] args)
+       
+        var cuentas = new List<CuentaBancaria>
         {
-            
-            List<CuentaBancaria> cuentas = new List<CuentaBancaria>();
+            new CajaAhorro("CA001", 1000, new[] { "Ana", "Luis" }),
+            new CajaAhorro("CA002", 200, new[] { "Juan" }),
+            new CuentaCorriente("CC001", 300, new[] { "María" }),
+            new CuentaCorriente("CC002", 50, new[] { "Pedro", "Lucía" })
+        };
 
-            
-            CajaAhorro ca1 = new CajaAhorro("1", 5000, new string[] { "Juan Pérez" });
-            CajaAhorro ca2 = new CajaAhorro("2", 10000, new string[] { "Ana Gómez" });
-            CuentaCorriente cc1 = new CuentaCorriente("3", 2000, new string[] { "Carlos López" });
-            CuentaCorriente cc2 = new CuentaCorriente("4", 3000, new string[] { "Lucía Díaz" });
+        foreach (var cuenta in cuentas)
+        {
+            Console.WriteLine($"\n-- Operando con cuenta {cuenta.Numero} --");
 
-            
-            cuentas.Add(ca1);
-            cuentas.Add(ca2);
-            cuentas.Add(cc1);
-            cuentas.Add(cc2);
+            try
+            {
+                cuenta.Depositar(500);
+                Console.WriteLine($"[OK] Depósito exitoso en cuenta {cuenta.Numero}. Saldo actual: {cuenta.Saldo:C}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] Depósito fallido en cuenta {cuenta.Numero}: {ex.Message}");
+            }
 
             
             try
             {
-                ca1.Depositar(1500);
-                ca1.Retirar(2000);
-
-                ca2.Depositar(1000);
-                ca2.Retirar(12000); 
-
-                cc1.Depositar(500);
-                cc1.Retirar(6000); 
-
-                cc2.Retirar(10000); 
+                cuenta.Retirar(300);
+                Console.WriteLine($"[OK] Retiro exitoso en cuenta {cuenta.Numero}. Saldo actual: {cuenta.Saldo:C}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+                Console.WriteLine($"[ERROR] Retiro fallido en cuenta {cuenta.Numero}: {ex.Message}");
             }
 
             
-            Console.WriteLine("\nResumen de cuentas:");
-            foreach (var cuenta in cuentas)
+            try
             {
-                var resumen = new
-                {
-                    Numero = cuenta.Numero,
-                    Tipo = cuenta.GetType().Name,
-                    Saldo = cuenta.Saldo,
-                    Estado = cuenta.Estado
-                };
-
-                Console.WriteLine($"Número: {resumen.Numero}, Tipo: {resumen.Tipo}, Saldo: {resumen.Saldo}, Estado: {resumen.Estado}");
+                cuenta.Depositar(0); 
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[MontoNoValido] {ex.Message}");
             }
 
-            Console.ReadKey();
+            
+            try
+            {
+                cuenta.Estado = Estado.Inactiva;
+                cuenta.Depositar(100); 
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[CuentaNoActiva] {ex.Message.Replace("{Estado}", cuenta.Estado.ToString())}");
+            }
+
+            finally
+            {
+                cuenta.Estado = Estado.Activa; 
+            }
+
+            
+            try
+            {
+                cuenta.Retirar(10_000);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[SaldoInsuficiente] {ex.Message}");
+            }
+        }
+
+        Console.WriteLine("\n--- ESTADO FINAL DE LAS CUENTAS ---");
+
+        
+        foreach (var cuenta in cuentas)
+        {
+            var resumen = new
+            {
+                cuenta.Numero,
+                Tipo = cuenta.Tipo.ToString(),
+                Estado = cuenta.Estado.ToString(),
+                cuenta.Saldo
+            };
+
+            Console.WriteLine($"Cuenta: {resumen.Numero}, Tipo: {resumen.Tipo}, Estado: {resumen.Estado}, Saldo: {resumen.Saldo:C}");
         }
     }
 }

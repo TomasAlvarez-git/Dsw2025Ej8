@@ -12,8 +12,8 @@ public class CuentaBancaria
 
     public class CuentaNoActiva : Exception
     {
-        public CuentaNoActiva()
-            : base("No se puede operar con la cuenta {Estado}")
+        public CuentaNoActiva(Estado estadoActual)
+            : base($"No se puede operar con la cuenta {estadoActual}")
         {
 
         }
@@ -21,8 +21,8 @@ public class CuentaBancaria
 
     public class SaldoInsuficiente : Exception
     {
-        public SaldoInsuficiente()
-            : base("La cuenta no cuenta con saldo para la operación solicitada. Fue Suspendida")
+        public SaldoInsuficiente(string numero)
+            : base($"La cuenta nro {numero} no cuenta con saldo para la operación solicitada. Fue Suspendida")
         {
 
         }
@@ -47,12 +47,12 @@ public class CuentaBancaria
     }
      
 
-    public void Depositar(decimal monto)
+    public virtual void Depositar(decimal monto)
     {
 
     }
 
-    public void Retirar(decimal monto)
+    public virtual void Retirar(decimal monto)
     {
 
 

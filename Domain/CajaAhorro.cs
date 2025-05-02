@@ -18,10 +18,10 @@ namespace Dsw2025Ej8.Domain
         {
             if (Estado != Estado.Activa)
             {
-                throw new CuentaNoActiva();
+                throw new CuentaNoActiva(Estado);
             }
         }
-        new public void Depositar(decimal monto)
+        public override void Depositar(decimal monto)
         {
             VerificarCuentaActiva();
 
@@ -32,7 +32,7 @@ namespace Dsw2025Ej8.Domain
             Saldo += monto;
         }
 
-        new public void Retirar(decimal monto)
+        public override void Retirar(decimal monto)
         {
             VerificarCuentaActiva();
 
@@ -45,7 +45,7 @@ namespace Dsw2025Ej8.Domain
             {
                 Estado = Estado.Suspendida;
 
-                throw new SaldoInsuficiente();
+                throw new SaldoInsuficiente(Numero);
             }
             Saldo -= monto;
         }
